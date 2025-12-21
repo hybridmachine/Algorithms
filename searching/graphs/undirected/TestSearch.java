@@ -15,14 +15,15 @@ public class TestSearch
             {
                 StdOut.print(v + " ");
             }
-            StdOut.println();
-
-            if (search.count() != G.V())
-            {
-                StdOut.print("not ");
-            }
-
-            StdOut.println("conected");
         }
+        
+        StdOut.println();
+
+        if (search.count() != G.V())
+        {
+            StdOut.print("not ");
+        }
+
+        StdOut.println("conected");
     }
 }
