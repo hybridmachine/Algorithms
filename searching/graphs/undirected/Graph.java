@@ -1,16 +1,36 @@
+// Download algs4 from https://algs4.cs.princeton.edu/code/algs4.jar, place in root directory of project (see Makefile for class path)
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Bag;
 
 public class Graph {
+	private final int V;		// number of vertices
+	private int E;				// number of edges
+	private Bag<Integer>[] adj;	// adjacency lists
+
     // Create a V-vertex graph with no edges.
+	@SuppressWarnings("unchecked")	// For the new Bag[V] cast to Bag<Integer>[]
     public Graph (int V) 
 	{
-    
+		this.V = V;
+		adj = (Bag<Integer>[]) new Bag[V]; 	// Create array of lists
+		for (int vert = 0; vert < V; vert++)			// Initialize all lists
+		{
+			adj[vert] = new Bag<Integer>();	// to empty
+		}
     }
 
     // Create a graph from intput stream in
     public Graph (In in) 
 	{
-        
+        this(in.readInt());			// Read V and construct this graph.
+		int E = in.readInt();
+
+		for (int idx = 0; idx < E; idx++)
+		{	// Add an edge
+			int v = in.readInt();	// Read a vertex
+			int w = in.readInt(); 	// Read another vertex
+			addEdge(v,w);
+		}
     }
 	
 	// Number of vertices
@@ -28,12 +48,14 @@ public class Graph {
 	// Add edge v-w to this graph
 	void addEdge(int v, int w) 
 	{
-		
+		adj[v].add(w);
+		adj[w].add(v);
+		E++;
 	}
 	
 	Iterable<Integer> adj(int v) 
 	{
-		return null;
+		return adj[v];
 	}
 	
 	public String toString() 
