@@ -9,11 +9,12 @@ public class Graph {
 
     // Create a V-vertex graph with no edges.
 	@SuppressWarnings("unchecked")	// For the new Bag[V] cast to Bag<Integer>[]
-    public Graph (int V) 
+    public Graph (int v) 
 	{
-		this.V = V;
-		adj = (Bag<Integer>[]) new Bag[V]; 	// Create array of lists
-		for (int vert = 0; vert < V; vert++)			// Initialize all lists
+		//System.out.println("Graph(int v) v is " + Integer.toString(v));
+		this.V = v;
+		adj = (Bag<Integer>[]) new Bag[v]; 	// Create array of lists
+		for (int vert = 0; vert < v; vert++)			// Initialize all lists
 		{
 			adj[vert] = new Bag<Integer>();	// to empty
 		}
@@ -36,13 +37,13 @@ public class Graph {
 	// Number of vertices
 	int V() 
 	{
-		return 0;
+		return V;
 	}
 	
 	// Number of edges
 	int E() 
 	{
-		return 0;
+		return E;
 	}
 	
 	// Add edge v-w to this graph

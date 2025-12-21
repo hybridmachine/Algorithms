@@ -1,5 +1,5 @@
 # Java compiler and flags
-JAVAC = javac -cp "../../../algs4.jar" -Xlint:unchecked
+JAVAC = javac -cp "../../../algs4.jar:." -Xlint:unchecked
 JAVA  = java
 JFLAGS = -g
 
