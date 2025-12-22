@@ -1,6 +1,5 @@
-// Perform depth first search on a Graph
 public class DepthFirstSearch
-{
+{ // Perform depth first search on a Graph
     private boolean[] marked;
     private int count;
 
