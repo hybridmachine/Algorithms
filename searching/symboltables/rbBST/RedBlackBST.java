@@ -1,5 +1,7 @@
 package searching.symboltables.rbBST;
 
+import java.util.NoSuchElementException;
+
 public class RedBlackBST<Key extends Comparable<Key>, Value>
 {    
     private static final boolean RED    = true;
@@ -94,6 +96,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
     public void put(Key key, Value val)
     {
         root = put(root, key, val);
+        root.color = BLACK;
     }
 
     private Node put(Node x, Key key, Value val)
@@ -114,6 +117,73 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
 
         x.n = size(x.left) + size(x.right) + 1;
         return x;
+    }
+
+    private boolean isEmpty()
+    {
+        return size() == 0;
+    }
+
+    public Key min()
+    {
+        if (isEmpty()) throw new NoSuchElementException();
+        Node x = min(root);
+        return x.key;
+    }
+    private Node min(Node x)
+    {
+        if (x.left == null) return x;
+        return min(x.left);
+    }
+
+    public Key max()
+    {
+        if (isEmpty()) throw new NoSuchElementException();
+        Node x = max(root);
+        return x.key;
+    }
+    private Node max(Node x)
+    {
+        if (x.right == null) return x;
+        return max(x.right);
+    }
+
+    public Key floor(Key key)
+    {
+        Node x = floor(root, key);
+        if (x == null) throw new NoSuchElementException();
+        return x.key;
+    }
+    private Node floor(Node x, Key key)
+    {
+        if (x == null) return null;
+
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp < 0) return floor(x.left, key);
+
+        Node t = floor(x.right,key);
+        if (t != null) return t;
+        else           return x;
+    }
+
+    public Key ceiling(Key key)
+    {
+        Node x = ceiling(root, key);
+        if (x == null) throw new NoSuchElementException();
+        return x.key;
+    }
+    private Node ceiling(Node x, Key key)
+    {
+        if (x == null) return null;
+
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp > 0) return ceiling(x.right, key);
+
+        Node t = ceiling(x.left,key);
+        if (t != null) return t;
+        else           return x;
     }
 }
 
