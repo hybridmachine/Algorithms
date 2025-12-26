@@ -1,5 +1,6 @@
 package searching.symboltables.rbBST;
-public class RedBlack<Key extends Comparable<Key>, Value>
+
+public class RedBlackBST<Key extends Comparable<Key>, Value>
 {    
     private static final boolean RED    = true;
     private static final boolean BLACK  = false;
@@ -55,6 +56,13 @@ public class RedBlack<Key extends Comparable<Key>, Value>
         return x;
     }
 
+    private void flipColors(Node x)
+    {
+        x.color = RED;
+        x.left.color = BLACK;
+        x.right.color = BLACK;
+    }
+
     public int size()
     {
         return size(root);
@@ -93,15 +101,19 @@ public class RedBlack<Key extends Comparable<Key>, Value>
         // Change key's value to val if key in subtree rooted at x.
         // Otherwise, add new node to subtree associating key with val.
 
-    if (x == null) return new Node(key, val,1, RED);
-    int cmp = key.compareTo(x.key);
+        if (x == null) return new Node(key, val,1, RED);
+        int cmp = key.compareTo(x.key);
 
-    if      (cmp < 0) x.left = put(x.left, key, val);
-    else if (cmp > 0) x.right = put(x.right, key, val);
-    else x.val = val;
+        if      (cmp < 0) x.left = put(x.left, key, val);
+        else if (cmp > 0) x.right = put(x.right, key, val);
+        else x.val = val;
 
-    x.n = size(x.left) + size(x.right) + 1;
-    return x;
+        if (isRed(x.right) && !isRed(x.left))       x = rotateLeft(x);
+        if (isRed(x.left) && isRed(x.left.left))    x = rotateRight(x);
+        if (isRed(x.left) && isRed(x.right))        flipColors(x);
+
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
     }
 }
 
