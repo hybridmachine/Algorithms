@@ -1,8 +1,8 @@
-package searching.symboltables.rbBST;
+//package searching.symboltables.rbBST;
 import edu.princeton.cs.algs4.Queue;
 import java.util.NoSuchElementException;
 
-public class RedBlackBST<Key extends Comparable<Key>, Value>
+public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
 {    
     private static final boolean RED    = true;
     private static final boolean BLACK  = false;
@@ -236,6 +236,25 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
         if (cmphi > 0) keys(x.right, queue, lo, hi);
     }
+
+    public int countRedNodes()
+    {
+        int redNodeCount = 0;
+        redNodeCount += countRedNodes(root);
+        return redNodeCount;
+    }
+
+    // Instrumentation methods
+    private int countRedNodes(Node x)
+    {
+        int redNodeCount = 0;
+        if (x == null) return 0;
+        if (isRed(x)) redNodeCount++;
+        redNodeCount += countRedNodes(x.left);
+        redNodeCount += countRedNodes(x.right);
+        return redNodeCount;
+    }
+
 
 }
 
