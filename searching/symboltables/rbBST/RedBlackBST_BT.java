@@ -6,9 +6,19 @@ public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
 {    
     private static final boolean RED    = true;
     private static final boolean BLACK  = false;
+    
+    private RedBlackBST_Statistics statistics = new RedBlackBST_Statistics();
 
     private Node root;
 
+    // Class to track performance statistics in RBSTs
+    // Contains the toString method as well
+    private class RedBlackBST_Statistics {
+        
+        public int countRotateLeft;
+        public int countRotateRight;
+        public int countFlipColors;
+    }
     private class Node
     {
         Key key;
@@ -34,6 +44,7 @@ public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
 
     private Node rotateLeft(Node h)
     {
+        statistics.countRotateLeft++;
         Node x = h.right;
         h.right = x.left;
         x.left = h;
@@ -47,6 +58,7 @@ public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
 
     private Node rotateRight(Node h)
     {
+        statistics.countRotateRight++;
         Node x = h.left;
         h.left = x.right;
         x.right = h;
@@ -60,6 +72,7 @@ public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
 
     private void flipColors(Node x)
     {
+        statistics.countFlipColors++;
         x.color = RED;
         x.left.color = BLACK;
         x.right.color = BLACK;
@@ -253,6 +266,42 @@ public class RedBlackBST_BT<Key extends Comparable<Key>, Value>
         redNodeCount += countRedNodes(x.left);
         redNodeCount += countRedNodes(x.right);
         return redNodeCount;
+    }
+
+    public int getHeight()
+    {
+        // Traverse the left most path and count number of nodes to get height.
+        int height = 0;
+        
+        Node current = root;
+        while (current != null)
+        {
+            current = current.left;
+            height++;
+        }
+        return height;
+    }
+
+    public void printStatistics()
+    {
+        StringBuilder statsStrBld = new StringBuilder();
+        statsStrBld.append("Count rotate left: ");
+        statsStrBld.append(statistics.countRotateLeft);
+        statsStrBld.append('\n');
+
+        statsStrBld.append("Count rotate right: ");
+        statsStrBld.append(statistics.countRotateRight);
+        statsStrBld.append('\n');
+
+        statsStrBld.append("Count flip colors: ");
+        statsStrBld.append(statistics.countFlipColors);
+        statsStrBld.append('\n');
+
+        statsStrBld.append("Height: ");
+        statsStrBld.append(this.getHeight());
+        statsStrBld.append('\n');
+
+        System.out.println(statsStrBld.toString());
     }
 
 
