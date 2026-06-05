@@ -1,4 +1,6 @@
 import edu.princeton.cs.algs4.*;
+import data_abstraction.*;
+
 public class TestVisualAccumulator
 {
     public static void main(String []args)

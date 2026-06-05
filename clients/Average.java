@@ -1,3 +1,6 @@
+import data_abstraction.*;
+import edu.princeton.cs.algs4.*;
+
 // Example StdIn client from Page 39
 public class Average
 {

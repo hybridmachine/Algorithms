@@ -1,6 +1,8 @@
 // Demonstrating how to use the StdDraw class
 import java.awt.Color;
 import java.util.Arrays;
+import data_abstraction.*;
+import edu.princeton.cs.algs4.*;
 
 public class StdDrawSortRandArray {
     public static void main(String[] args) {

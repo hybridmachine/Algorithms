@@ -1,3 +1,5 @@
+package data_abstraction;
+
 import edu.princeton.cs.algs4.*;
 
 public class VisualAccumulator

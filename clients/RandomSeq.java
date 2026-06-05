@@ -1,4 +1,7 @@
 // Page 37 example StdOut client
+import edu.princeton.cs.algs4.*;
+import data_abstraction.*;
+
 public class RandomSeq
 {
     public static void main(String[] args)

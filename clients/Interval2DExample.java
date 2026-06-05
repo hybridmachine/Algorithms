@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.*;
+import data_abstraction.*;
 
 public class Interval2DExample
 {
@@ -16,7 +17,7 @@ public class Interval2DExample
         Interval2D box = new Interval2D(xint, yint);
         box.draw();
         
-        Counter counter = new Counter("hits");
+        data_abstraction.Counter counter = new data_abstraction.Counter("hits");
         for (int t = 0; t < trials; t++)
         {
             double x = StdRandom.uniformDouble(0.0, 1.0);

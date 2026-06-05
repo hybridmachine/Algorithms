@@ -1,5 +1,7 @@
 // Demonstrating how to use the StdDraw class
 import java.awt.Color;
+import data_abstraction.*;
+import edu.princeton.cs.algs4.*;
 
 public class StdDrawON {
     public static void main(String[] args) {
