@@ -1,7 +1,10 @@
+package searching;
+
+import edu.princeton.cs.algs4.*;
 // Page 47
 import java.util.Arrays;
 
-public class BinarySearch
+public class BinarySearchBT
 {
     public static int indexOf(int[] a, int key)
     {

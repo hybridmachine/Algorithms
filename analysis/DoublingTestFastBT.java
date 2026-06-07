@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-public class DoublingTestBT 
+public class DoublingTestFastBT 
 {
     public static double timeTrial(int n)
     {
@@ -10,7 +10,7 @@ public class DoublingTestBT
             a[i] = StdRandom.uniformInt(-MAX, MAX);
             
         StopwatchBT timer = new StopwatchBT();
-        int count = ThreeSumBT.count(a);
+        int count = ThreeSumFastBT.count(a);
         return timer.elapsedTime();
     }
     
