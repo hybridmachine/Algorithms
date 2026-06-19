@@ -6,17 +6,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DrawUnionFind",
+            "request": "launch",
+            "mainClass": "clients.DrawUnionFind",
+            "projectName": "Algorithms_e37e7786",
+            "args": ["<", "${workspaceFolder}/algs4-data/tinyUF.txt"]
+        },
+        {
+            "type": "java",
             "name": "TestSearch",
             "request": "launch",
             "mainClass": "TestSearch",
             "projectName": "Algorithms_93a3ffd0",
-            "args": ["tinyG.txt","0"]
+            "args": [
+                "tinyG.txt",
+                "0"
+            ]
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "bin/${file}",
+            "mainClass": "${file}",
             "classPaths": [
                 "C:/Users/btabone/source/Algorithms/algs4.jar",
                 "searching/graphs/undirected"

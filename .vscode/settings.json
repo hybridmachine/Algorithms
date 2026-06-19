@@ -1,11 +1,11 @@
 {
     "java.project.sourcePaths": [
-        ".",
-        "searching\\graphs\\undirected"
+        "."
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "c:\\Users\\brian\\source\\Algorithms\\algs4.jar"
+        "algs4bt.jar",
+        "algs4.jar"
     ],
     "java.format.settings.url": ".vscode/java-formatter.xml"
 }

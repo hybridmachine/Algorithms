@@ -1,3 +1,4 @@
+package analysis;
 import edu.princeton.cs.algs4.*;
 
 public class DoublingTestBT 
@@ -16,10 +17,13 @@ public class DoublingTestBT
     
     public static void main(String[] args)
     {
+        double prev = timeTrial(125);
         for (int n = 250; true; n *= 2)
         {
             double time = timeTrial(n);
-            StdOut.printf("%7d %7.1f\n", n, time);
+            StdOut.printf("%7d %7.1f ", n, time);
+            StdOut.printf("%5.1f\n", time/prev);
+            prev = time;
         }
     }
 }
