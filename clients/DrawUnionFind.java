@@ -10,21 +10,25 @@ import java.awt.Rectangle;
 import org.w3c.dom.css.Rect;
 
 public class DrawUnionFind {
-    private static final double titleX = 2.5;
-    private static final double titleY = 19.5;
+    private static final double titleX = 25;
+    private static final double titleY = 590;
     private static final int canvasWidth = 600;
     private static final int canvasHeight = 600;
-    private static final int scale = 20;
+    private static final int gap = 20;
+    private static int xIndex = 0; // Helper to layout in the x, for now
     private static class Vertex
     {
-        int width = 45; 
-        int height = 45;
+        int width = 15; 
+        int height = 15;
         int id;
         Vertex parent;
         Vertex[] children;
         int nextChildIdx = 0;
         Color color;
-
+        // Default to center, will get updated on layout
+        int x = 0;
+        int y = canvasHeight-30;
+        
         Vertex(int id)
         {
             this.id = id;
@@ -33,16 +37,26 @@ public class DrawUnionFind {
             color = new Color((int) (Math.random() * 256), 
                                                 (int) (Math.random() * 256), 
                                                 (int) (Math.random() * 256));
+        
+            x = xIndex + width + gap;
+            xIndex = x; 
+        
         }
         
-        // Default to center, will get updated on layout
-        int x = canvasWidth/2;
-        int y = canvasHeight/2;
+
         
         public Rectangle getBounds() {
             return new Rectangle(x, y, width, height);
         }
         
+        public void setBounds(Rectangle newBounds)
+        {
+            x = newBounds.x;
+            y = newBounds.y;
+            width = newBounds.width;
+            height = newBounds.height;
+        }
+
         public Color getColor()
         {
             return color;
@@ -51,6 +65,10 @@ public class DrawUnionFind {
         public void setParent(Vertex parent)
         {
             this.parent = parent;
+            Rectangle newBounds = parent.getBounds();
+            newBounds.y = newBounds.y - newBounds.height-gap; // Move the child below the parent
+            // TODO layout X
+            this.setBounds(newBounds);
         }
         
         public void addChild(Vertex child)
@@ -117,6 +135,8 @@ public class DrawUnionFind {
             Rectangle bounds = vertex.getBounds();
 
             StdDraw.filledCircle(bounds.getX(), bounds.getY(), bounds.height);
+            StdDraw.setPenColor(new Color(255, 255, 255));
+            StdDraw.text(bounds.getX(), bounds.getY(), Integer.toString(vertex.id));
         }
 
         while (true) {
