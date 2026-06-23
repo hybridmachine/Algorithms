@@ -7,6 +7,7 @@ import data_abstraction.*;
 import searching.*;
 import java.awt.Rectangle;
 
+import org.w3c.dom.Node;
 import org.w3c.dom.css.Rect;
 
 public class DrawUnionFind {
@@ -14,7 +15,7 @@ public class DrawUnionFind {
     private static final double titleY = 590;
     private static final int canvasWidth = 600;
     private static final int canvasHeight = 600;
-    private static final int gap = 20;
+    private static final int gap = 10;
     private static int xIndex = 0; // Helper to layout in the x, for now
     private static class Vertex
     {
@@ -27,7 +28,7 @@ public class DrawUnionFind {
         Color color;
         // Default to center, will get updated on layout
         int x = 0;
-        int y = canvasHeight-30;
+        int y = canvasHeight-50;
         
         Vertex(int id)
         {
@@ -40,11 +41,15 @@ public class DrawUnionFind {
         
             x = xIndex + width + gap;
             xIndex = x; 
-        
+            System.out.println("xIndex is " + xIndex);
         }
         
 
-        
+        public Vertex[] getChildren()
+        {
+            return children;
+        }
+
         public Rectangle getBounds() {
             return new Rectangle(x, y, width, height);
         }
@@ -65,10 +70,16 @@ public class DrawUnionFind {
         public void setParent(Vertex parent)
         {
             this.parent = parent;
+            /* 
             Rectangle newBounds = parent.getBounds();
+            Rectangle currentBounds = this.getBounds();
+
             newBounds.y = newBounds.y - newBounds.height-gap; // Move the child below the parent
+            newBounds.x = currentBounds.x;
             // TODO layout X
             this.setBounds(newBounds);
+            System.out.println("New bounds: " + this);
+            */
         }
         
         public void addChild(Vertex child)
@@ -80,8 +91,29 @@ public class DrawUnionFind {
                 nextChildIdx++;
             }
         }
+
+        public String toString()
+        {
+            return "id:" + id + " x:" + x + " y:" + y; 
+        }
     }
     
+    private static void verticalLayout(Vertex vertex, int offset)
+    {
+        Rectangle currentBounds = vertex.getBounds();
+        currentBounds.y -= offset;
+        vertex.setBounds(currentBounds);
+
+        offset += (gap);
+        for (Vertex child : vertex.children)
+        {
+            if (child != null)
+            {
+                verticalLayout(child, offset);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // Set the canvas size (in pixels)
         StdDraw.setCanvasSize(canvasWidth, canvasHeight);
@@ -120,13 +152,21 @@ public class DrawUnionFind {
             int parent = uf.parent(idx);
             if (nodes[parent] == null)
                 nodes[parent] = new Vertex(parent);
-                
-            nodes[parent].addChild(nodes[idx]);
+            
+            if (parent != idx)
+                nodes[parent].addChild(nodes[idx]);
         }
         
         // Animation loop: Press 'c' to change to a random colored circle, or 'q' to quit
         StdDraw.enableDoubleBuffering();
         System.out.println("Click the window. Press 'c' for random circles, or 'q' to quit.");
+
+        // Layout vertically
+        for (Vertex vertex : nodes)
+        {
+            int forrestRoot = uf.find(vertex.id);
+            verticalLayout(nodes[forrestRoot], 0);
+        }
 
         for (Vertex vertex : nodes)
         {
@@ -137,6 +177,24 @@ public class DrawUnionFind {
             StdDraw.filledCircle(bounds.getX(), bounds.getY(), bounds.height);
             StdDraw.setPenColor(new Color(255, 255, 255));
             StdDraw.text(bounds.getX(), bounds.getY(), Integer.toString(vertex.id));
+            System.out.println("Laying out " + vertex);
+        }
+
+        // Draw connecting lines
+        for (Vertex vertex : nodes)
+        {
+            Color drawColor = vertex.getColor();
+            StdDraw.setPenColor(drawColor);
+            Rectangle bounds = vertex.getBounds();
+
+            for (Vertex child : vertex.getChildren())
+            {
+                if (child != null)
+                {
+                    Rectangle childBounds = child.getBounds();
+                    StdDraw.line(bounds.getCenterX(), bounds.getCenterY(), childBounds.getCenterX(), childBounds.getCenterY());
+                }
+            }
         }
 
         while (true) {
