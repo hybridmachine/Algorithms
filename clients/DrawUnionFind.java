@@ -17,6 +17,7 @@ public class DrawUnionFind {
     private static final int canvasHeight = 600;
     private static final int gap = 10;
     private static int xIndex = 0; // Helper to layout in the x, for now
+    private static final int MAX_ROWS = 15;
     private static class Vertex
     {
         int width = 15; 
@@ -29,7 +30,10 @@ public class DrawUnionFind {
         // Default to center, will get updated on layout
         int x = 0;
         int y = canvasHeight-50;
-        
+        int row = 0;
+        static int[] row_counts = new int[MAX_ROWS];
+        int col = -1;
+
         Vertex(int id)
         {
             this.id = id;
@@ -94,7 +98,7 @@ public class DrawUnionFind {
 
         public String toString()
         {
-            return "id:" + id + " x:" + x + " y:" + y; 
+            return "id:" + id + " x:" + x + " y:" + y + " row:" + row + " col:" + col; 
         }
     }
     
@@ -105,12 +109,29 @@ public class DrawUnionFind {
         vertex.setBounds(currentBounds);
 
         offset += (gap);
+        vertex.row = offset / gap;
+
+        if (vertex.col == -1)
+        {
+            vertex.col = Vertex.row_counts[vertex.row];
+            Vertex.row_counts[vertex.row]++;
+        }
+        
         for (Vertex child : vertex.children)
         {
             if (child != null)
             {
                 verticalLayout(child, offset);
             }
+        }
+    }
+
+    private static void horizontalLayout(Vertex[] vertices)
+    {
+        for (Vertex vertex : vertices)
+        {
+            int columnCenter = (canvasWidth/2) / (Vertex.row_counts[vertex.row] + 1);
+            vertex.x = columnCenter * (vertex.col + 1);
         }
     }
 
@@ -167,6 +188,8 @@ public class DrawUnionFind {
             int forrestRoot = uf.find(vertex.id);
             verticalLayout(nodes[forrestRoot], 0);
         }
+
+        horizontalLayout(nodes);
 
         for (Vertex vertex : nodes)
         {
