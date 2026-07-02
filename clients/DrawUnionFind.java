@@ -2,6 +2,7 @@ package clients;
 
 // Demonstrating how to use the StdDraw class
 import java.awt.Color;
+import java.awt.Font;
 import edu.princeton.cs.algs4.*;
 import data_abstraction.*;
 import searching.*;
@@ -29,7 +30,7 @@ public class DrawUnionFind {
         Color color;
         // Default to center, will get updated on layout
         int x = 0;
-        int y = canvasHeight-50;
+        int y = canvasHeight-70;
         int row = 0;
         static int[] row_counts = new int[MAX_ROWS];
         int col = -1;
@@ -101,7 +102,72 @@ public class DrawUnionFind {
             return "id:" + id + " x:" + x + " y:" + y + " row:" + row + " col:" + col; 
         }
     }
-    
+    /// Draw a pixel ruler across the top and down the left side of the canvas
+    private static void renderRulers(boolean drawVertical)
+    {
+        StdDraw.setPenColor(Color.BLUE);
+        int segmentWidth = canvasWidth / 40;
+        int tickBaseLength = 10;
+        int tickLength = 0;
+        int tickStart = canvasHeight - 25;
+        int tickIdx = 0;
+        Font currentFont = StdDraw.getFont();
+        Font smallerFont = currentFont.deriveFont(currentFont.getSize() - (float)1.5);
+
+        StdDraw.setFont(smallerFont);
+        for (int tickPosition = 0; tickPosition < canvasWidth; tickPosition += segmentWidth)
+        {
+
+            // Don't draw the 0 tick
+            if (tickPosition > 0)
+            {
+                tickIdx ++;
+                tickLength = tickBaseLength;
+                if (tickIdx % 2 == 0)
+                {
+                    tickLength += 10;
+                }
+
+                StdDraw.line(tickPosition, tickStart, tickPosition, tickStart - tickLength);
+                if ((tickPosition % (canvasWidth/8)) == 0)
+                {
+                    
+                    StdDraw.text(tickPosition, tickStart + 10, Integer.toString(tickPosition));
+                }
+            }
+        }
+
+        if (drawVertical)
+        {
+            // Draw vertical ruler
+            tickStart = 5; 
+            for (int tickPosition = 0; tickPosition < canvasHeight; tickPosition += segmentWidth)
+            {
+
+                // Don't draw the 0 tick
+                if (tickPosition > 0)
+                {
+                    tickIdx ++;
+                    tickLength = tickBaseLength;
+                    if (tickIdx % 2 == 0)
+                    {
+                        tickLength += 10;
+                    }
+
+                    StdDraw.line(tickStart, tickPosition, tickStart + tickLength, tickPosition);
+                    /* 
+                    if ((tickPosition % (canvasHeight/8)) == 0)
+                    {
+                        StdDraw.text(tickPosition, tickStart + 10, Integer.toString(tickPosition));
+                    }
+                    */
+                }
+            }
+        }
+
+        StdDraw.setFont(currentFont);
+    }
+
     private static void verticalLayout(Vertex vertex, int offset)
     {
         Rectangle currentBounds = vertex.getBounds();
@@ -116,7 +182,7 @@ public class DrawUnionFind {
             vertex.col = Vertex.row_counts[vertex.row];
             Vertex.row_counts[vertex.row]++;
         }
-        
+
         for (Vertex child : vertex.children)
         {
             if (child != null)
@@ -130,7 +196,7 @@ public class DrawUnionFind {
     {
         for (Vertex vertex : vertices)
         {
-            int columnCenter = (canvasWidth/2) / (Vertex.row_counts[vertex.row] + 1);
+            int columnCenter = (canvasWidth) / (Vertex.row_counts[vertex.row] + 1);
             vertex.x = columnCenter * (vertex.col + 1);
         }
     }
@@ -144,7 +210,8 @@ public class DrawUnionFind {
 
         // Display text in black
         StdDraw.setPenColor(Color.BLACK);
-        StdDraw.text(titleX, titleY, "Draw Union Find");
+        //StdDraw.text(titleX, titleY, "Draw Union Find");
+        renderRulers(false);
 
         int N = StdIn.readInt();
         Vertex []nodes= new Vertex[N];
