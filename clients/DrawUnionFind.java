@@ -204,7 +204,8 @@ public class DrawUnionFind {
     public static void main(String[] args) {
         // Set the canvas size (in pixels)
         StdDraw.setCanvasSize(canvasWidth, canvasHeight);
-
+        StdDraw.setTitle("Draw Union Find");
+        
         // Set the scale of the coordinate system (x and y from 0 to 10)
         StdDraw.setScale(0, canvasWidth);
 
