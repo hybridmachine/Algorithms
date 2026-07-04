@@ -14,6 +14,7 @@ public class SelectionSort extends SortBase {
                 if (less(a[j], a[min])) min = j;
             }
             exchange(a, i, min);
+            show(a);
         }
     }
 
