@@ -6,12 +6,16 @@ public class InsertionSort extends SortBase {
     public void sort(Comparable [] a)
     {
         int n = a.length;
+        Comparable []before = new Comparable[n];
         for (int i = 1; i< n; i++)
         {
             for (int j = i; j > 0 && less(a[j], a[j-1]); j--)
             {
+                for (int idx = 0; idx < n; idx++)
+                    before[idx] = a[idx];
+
                 exchange(a, j, j-1);
-                show(a); // Display the sort in progress
+                show(before,a); // Display the sort in progress
             }
         }
     }
