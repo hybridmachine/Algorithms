@@ -1,11 +1,13 @@
 package sorting;
 
 import edu.princeton.cs.algs4.StdIn;
+import java.util.Arrays;
 
 public class SelectionSort extends SortBase {
     public void sort(Comparable [] a)
     {
         int n = a.length;
+        Comparable []before = new Comparable[n];
         for (int i = 0; i< n; i++)
         {
             int min = i;
@@ -13,8 +15,12 @@ public class SelectionSort extends SortBase {
             {
                 if (less(a[j], a[min])) min = j;
             }
+
+            for (int idx = 0; idx < n; idx++)
+                before[idx] = a[idx];
+
             exchange(a, i, min);
-            show(a);
+            show(before, a);
         }
     }
 

@@ -41,6 +41,17 @@
         },
         {
             "type": "java",
+            "name": "InsertionSort",
+            "request": "launch",
+            "mainClass": "sorting.InsertionSort",
+            "projectName": "Algorithms_e37e7786",
+            "args": [
+                "<",
+                "${workspaceFolder}/algs4-data/sortme.txt"
+            ]
+        },
+        {
+            "type": "java",
             "name": "TestSearch",
             "request": "launch",
             "mainClass": "TestSearch",

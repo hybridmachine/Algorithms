@@ -1,6 +1,7 @@
 package sorting;
 
 import edu.princeton.cs.algs4.*;
+import utils.*;
 
 public class SortBase {
     public void sort(Comparable [] a)
@@ -16,6 +17,19 @@ public class SortBase {
     protected static void exchange(Comparable[] a, int i, int j)
     {
         Comparable t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+
+    protected static void show(Comparable []before, Comparable []a)
+    {
+        for (int i = 0; i < a.length; i++)
+        {
+            if (a[i] != before[i])
+                StdOut.print(ColoredTerminal.colorstr(ColoredTerminal.RED, ColoredTerminal.WHITE_BG, a[i].toString()) + " ");
+            else
+                StdOut.print(a[i] + " ");
+            
+        }
+        StdOut.println();
     }
 
     protected static void show(Comparable []a)
