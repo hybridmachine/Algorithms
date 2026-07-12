@@ -4,9 +4,16 @@ import edu.princeton.cs.algs4.*;
 import utils.*;
 
 public class SortBase {
+    protected ISortStepDisplayer sortDisplayer;
+
     public void sort(Comparable [] a)
     {
 
+    }
+
+    public void setSortStepDisplayer(ISortStepDisplayer displayer)
+    {
+        sortDisplayer = displayer;
     }
 
     protected static boolean less(Comparable v, Comparable w)
