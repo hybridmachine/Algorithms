@@ -14,7 +14,7 @@ public class VisualizeSorting implements ISortStepDisplayer {
     private static final int canvasWidth = 600;
     private static final int canvasHeight = 600;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-    public void showStep(Comparable []a)
+    public void showStep(Comparable []a, int i, int min)
     {
         StdDraw.clear();
         double max = Double.MAX_VALUE;
@@ -27,13 +27,27 @@ public class VisualizeSorting implements ISortStepDisplayer {
                 int x = (idx * (canvasWidth/a.length)) + 15;
                 int height = alphabet.indexOf(a[idx].toString().toLowerCase()) + 1;
                 StdOut.println(a[idx] + " " + Integer.toString(height));
+                Color activePenColor = StdDraw.getPenColor();
+                if (i != min){
+                    if (idx == i)
+                    {
+                        StdDraw.setPenColor(Color.RED);
+                    }
+                    else if (idx == min)
+                    {
+                        StdDraw.setPenColor(Color.MAGENTA);
+                    }                    
+                }
+
                 StdDraw.filledRectangle(x, height + 1, 10, height);
                 StdDraw.text(x, height + height + 3, a[idx].toString());
+                StdDraw.setPenColor(activePenColor);
+                
             }
 
             StdOut.println("----------------------------------");
             StdOut.println();
-            StdDraw.pause(750);
+            StdDraw.pause(1250);
         }
     }
 

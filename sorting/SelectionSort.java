@@ -35,7 +35,7 @@ public class SelectionSort extends SortBase {
 
         if (sortDisplayer != null)
         {
-            sortDisplayer.showStep(a);
+            sortDisplayer.showStep(a, -1, -1);
         }
 
         for (int i = 0; i< n; i++)
@@ -52,7 +52,7 @@ public class SelectionSort extends SortBase {
             exchange(a, i, min);
             if (sortDisplayer != null)
             {
-                sortDisplayer.showStep(a);
+                sortDisplayer.showStep(a, i, min);
             }
             show(before, a);
         }
