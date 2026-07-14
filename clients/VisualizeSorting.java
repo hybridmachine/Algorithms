@@ -21,14 +21,19 @@ public class VisualizeSorting implements ISortStepDisplayer {
         if (a[0] instanceof String)
         {
             max = 26.0;
+            StdDraw.setYscale(0, max*4);
             for (int idx = 0; idx < a.length; idx++)
             {
-                int height = alphabet.indexOf(a[idx].toString().toLowerCase());
+                int x = (idx * (canvasWidth/a.length)) + 15;
+                int height = alphabet.indexOf(a[idx].toString().toLowerCase()) + 1;
                 StdOut.println(a[idx] + " " + Integer.toString(height));
+                StdDraw.filledRectangle(x, height + 1, 10, height);
+                StdDraw.text(x, height + height + 3, a[idx].toString());
             }
 
             StdOut.println("----------------------------------");
             StdOut.println();
+            StdDraw.pause(750);
         }
     }
 
@@ -41,7 +46,7 @@ public class VisualizeSorting implements ISortStepDisplayer {
         StdDraw.setScale(0, canvasWidth);
 
         // Display text in black
-        StdDraw.setPenColor(Color.BLACK);
+        StdDraw.setPenColor(Color.BLUE);
 
         StdDraw.show();
         SelectionSort sorter = new SelectionSort(StdIn.readAllStrings());
@@ -51,7 +56,6 @@ public class VisualizeSorting implements ISortStepDisplayer {
         sorter.show();
 
         while (true) {
-            StdDraw.show();
             StdDraw.pause(20);
         }
     }

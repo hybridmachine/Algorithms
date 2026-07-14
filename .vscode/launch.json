@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "VisualizeSorting",
+            "request": "launch",
+            "mainClass": "clients.VisualizeSorting",
+            "projectName": "Algorithms_e37e7786"
+        },
+        {
+            "type": "java",
             "name": "SortBase",
             "request": "launch",
             "mainClass": "sorting.SortBase",
