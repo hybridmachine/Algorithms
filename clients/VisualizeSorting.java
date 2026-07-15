@@ -14,40 +14,54 @@ public class VisualizeSorting implements ISortStepDisplayer {
     private static final int canvasWidth = 600;
     private static final int canvasHeight = 600;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-    public void showStep(Comparable []a, int i, int min)
+    public void showStep(Comparable []previous, Comparable []current, int i, int min)
     {
         StdDraw.clear();
         double max = Double.MAX_VALUE;
-        if (a[0] instanceof String)
+        if (current[0] instanceof String)
         {
             max = 26.0;
             StdDraw.setYscale(0, max*4);
-            for (int idx = 0; idx < a.length; idx++)
+            Comparable [][]beforeAfter = new Comparable[2][];
+            beforeAfter[0] = previous;
+            beforeAfter[1] = current;
+            for (Comparable []a : beforeAfter)
             {
-                int x = (idx * (canvasWidth/a.length)) + 15;
-                int height = alphabet.indexOf(a[idx].toString().toLowerCase()) + 1;
-                StdOut.println(a[idx] + " " + Integer.toString(height));
-                Color activePenColor = StdDraw.getPenColor();
-                if (i != min){
-                    if (idx == i)
-                    {
-                        StdDraw.setPenColor(Color.RED);
+                StdDraw.clear();
+                for (int idx = 0; idx < a.length; idx++)
+                {
+                    int x = (idx * (canvasWidth/a.length)) + 15;
+                    int height = alphabet.indexOf(a[idx].toString().toLowerCase()) + 1;
+                    StdOut.println(a[idx] + " " + Integer.toString(height));
+                    Color activePenColor = StdDraw.getPenColor();
+                    if (i != min){
+                        Color iColor = Color.RED;
+                        Color minColor = Color.MAGENTA;
+                        if (a == previous)
+                        {
+                            // Swap the colors for displaying previous
+                            Color temp = iColor;
+                            iColor = minColor;
+                            minColor = temp;
+                        }
+                        if (idx == i)
+                        {
+                            StdDraw.setPenColor(iColor);
+                        }
+                        else if (idx == min)
+                        {
+                            StdDraw.setPenColor(minColor);
+                        }                    
                     }
-                    else if (idx == min)
-                    {
-                        StdDraw.setPenColor(Color.MAGENTA);
-                    }                    
+
+                    StdDraw.filledRectangle(x, height + 1, 10, height);
+                    StdDraw.text(x, height + height + 3, a[idx].toString());
+                    StdDraw.setPenColor(activePenColor); 
                 }
-
-                StdDraw.filledRectangle(x, height + 1, 10, height);
-                StdDraw.text(x, height + height + 3, a[idx].toString());
-                StdDraw.setPenColor(activePenColor);
-                
+                StdDraw.pause(3000);
             }
-
             StdOut.println("----------------------------------");
             StdOut.println();
-            StdDraw.pause(1250);
         }
     }
 

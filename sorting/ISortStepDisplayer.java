@@ -2,5 +2,5 @@ package sorting;
 
 public interface ISortStepDisplayer {
     // Implementer will show array in its current state, for example in a visualizer;
-    public void showStep(Comparable []a, int i, int min);
+    public void showStep(Comparable []previous, Comparable []current, int i, int min);
 }
