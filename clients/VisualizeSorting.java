@@ -8,6 +8,7 @@ import java.awt.Font;
 import edu.princeton.cs.algs4.*;
 import java.awt.Rectangle;
 import sorting.ISortStepDisplayer;
+import sorting.InsertionSort;
 import sorting.SelectionSort;
 
 public class VisualizeSorting implements ISortStepDisplayer {
@@ -58,7 +59,7 @@ public class VisualizeSorting implements ISortStepDisplayer {
                     StdDraw.text(x, height + height + 3, a[idx].toString());
                     StdDraw.setPenColor(activePenColor); 
                 }
-                StdDraw.pause(3000);
+                StdDraw.pause(125);
             }
             StdOut.println("----------------------------------");
             StdOut.println();
@@ -77,7 +78,7 @@ public class VisualizeSorting implements ISortStepDisplayer {
         StdDraw.setPenColor(Color.BLUE);
 
         StdDraw.show();
-        SelectionSort sorter = new SelectionSort(StdIn.readAllStrings());
+        InsertionSort sorter = new InsertionSort(StdIn.readAllStrings());
         sorter.setSortStepDisplayer(new VisualizeSorting());
         sorter.sort();
         assert sorter.isSorted();

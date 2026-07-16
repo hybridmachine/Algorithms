@@ -5,7 +5,8 @@ import utils.*;
 
 public class SortBase {
     protected ISortStepDisplayer sortDisplayer;
-
+    protected Comparable[] a;
+    
     public void sort(Comparable [] a)
     {
 
