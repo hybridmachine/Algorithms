@@ -17,7 +17,6 @@ public class VisualizeSorting implements ISortStepDisplayer {
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
     public void showStep(Comparable []previous, Comparable []current, int i, int min)
     {
-        StdDraw.clear();
         double max = Double.MAX_VALUE;
         if (current[0] instanceof String)
         {
@@ -28,7 +27,6 @@ public class VisualizeSorting implements ISortStepDisplayer {
             beforeAfter[1] = current;
             for (Comparable []a : beforeAfter)
             {
-                StdDraw.clear();
                 for (int idx = 0; idx < a.length; idx++)
                 {
                     int x = (idx * (canvasWidth/a.length)) + 15;
@@ -38,12 +36,19 @@ public class VisualizeSorting implements ISortStepDisplayer {
                     if (i != min){
                         Color iColor = Color.RED;
                         Color minColor = Color.MAGENTA;
+                        Color backgroundColor = StdDraw.getBackgroundColor();
                         if (a == previous)
                         {
                             // Swap the colors for displaying previous
                             Color temp = iColor;
                             iColor = minColor;
                             minColor = temp;
+                        }
+                        if (idx == i || idx == min)
+                        {
+                            // Blank out the current position
+                            StdDraw.setPenColor(backgroundColor);
+                            StdDraw.filledRectangle(x, max, 10, 2.0 * max);
                         }
                         if (idx == i)
                         {
@@ -52,14 +57,14 @@ public class VisualizeSorting implements ISortStepDisplayer {
                         else if (idx == min)
                         {
                             StdDraw.setPenColor(minColor);
-                        }                    
+                        }     
+                        StdDraw.filledRectangle(x, height + 1, 10, height);
+                        StdDraw.text(x, height + height + 3, a[idx].toString());               
                     }
 
-                    StdDraw.filledRectangle(x, height + 1, 10, height);
-                    StdDraw.text(x, height + height + 3, a[idx].toString());
                     StdDraw.setPenColor(activePenColor); 
                 }
-                StdDraw.pause(125);
+                StdDraw.pause(250);
             }
             StdOut.println("----------------------------------");
             StdOut.println();
